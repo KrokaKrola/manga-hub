@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  base-app:
+    restart: always
+    build:
+      context: .
+      target: development
+      dockerfile: Dockerfile
+    volumes:
+      - .:/usr/src/app:delegated
+      - mono-node-modules:/usr/src/app/node_modules

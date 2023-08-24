@@ -1,0 +1,63 @@
+services:
+  api-gateway:
+    extends:
+      file: docker-compose.base.yml
+      service: base-app
+    command: npm run api-gateway:serve:docker
+    env_file:
+      - ./apps/api-gateway/.env
+    depends_on:
+      - rabbitmq
+    ports:
+      - '3000:3000'
+    networks:
+      - backend
+
+  api-main:
+    extends:
+      file: docker-compose.base.yml
+      service: base-app
+    command: npm run api-main:serve:docker
+    env_file:
+      - ./apps/api-main/.env
+    depends_on:
+      - rabbitmq
+    networks:
+      - backend
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - '15672:15672'
+      - '5672:5672'
+    networks:
+      - backend
+    volumes:
+      - rabbitmq:/var/lib/rabbitmq
+      - ./docker/rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+
+  postgres:
+    image: postgres
+    container_name: database
+    networks:
+      - backend
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres:/data:delegated
+    environment:
+      POSTGRES_PASSWORD: mangahub_password
+      POSTGRES_USER: mangahub_user
+      POSTGRES_DB: mangahub_db
+    restart: on-failure
+
+networks:
+  backend:
+
+volumes:
+  rabbitmq:
+    driver: local
+  postgres:
+    driver: local
+  mono-node-modules: null

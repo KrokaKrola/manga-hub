@@ -1,0 +1,5 @@
+[2023-08-24T08:37:56.251Z][QUERY]: SELECT * FROM current_schema()
+[2023-08-24T08:37:56.261Z][QUERY]: SELECT version();
+[2023-08-24T08:37:56.263Z][QUERY]: SELECT * FROM "information_schema"."tables" WHERE "table_schema" = 'public' AND "table_name" = 'migrations'
+[2023-08-24T08:37:56.270Z][QUERY]: CREATE TABLE "migrations" ("id" SERIAL NOT NULL, "timestamp" bigint NOT NULL, "name" character varying NOT NULL, CONSTRAINT "PK_8c82d7f526340ab734260ea46be" PRIMARY KEY ("id"))
+[2023-08-24T08:37:56.295Z][QUERY]: SELECT * FROM "migrations" "migrations" ORDER BY "id" DESC
