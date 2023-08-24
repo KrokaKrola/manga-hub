@@ -1,15 +1,20 @@
 import { Module } from '@nestjs/common';
-import { AuthController } from './presentation/controllers/auth.controller';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './infrastructure/database/database.module';
+import { UserModule } from './infrastructure/ioc/user.module';
+import typeorm from './infrastructure/database/config';
+import { PostModule } from './infrastructure/ioc/post.module';
 
 @Module({
-  imports: [
-    DatabaseModule,
-    ConfigModule.forRoot({
-      isGlobal: true,
-    }),
-  ],
-  controllers: [AuthController],
+    imports: [
+        DatabaseModule,
+        ConfigModule.forRoot({
+            isGlobal: true,
+            load: [typeorm],
+        }),
+        UserModule,
+        PostModule,
+    ],
+    controllers: [],
 })
 export class AppModule {}

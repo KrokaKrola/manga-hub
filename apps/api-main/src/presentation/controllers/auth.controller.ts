@@ -1,10 +1,15 @@
 import { Controller } from '@nestjs/common';
-import { MessagePattern } from '@nestjs/microservices';
+import { MessagePattern, Payload } from '@nestjs/microservices';
+import { CommandLoginRoute } from '@manga-hub/message-routes';
+import { LoginUserAction } from '../../application/users/login-user.action';
+import { LoginUserRequest } from '../requests/login-user.request';
 
 @Controller()
 export class AuthController {
-  @MessagePattern({ cmd: 'login' })
-  login() {
-    return { message: 'Hello World!' };
-  }
+    constructor(private readonly loginUserAction: LoginUserAction) {}
+
+    @MessagePattern(CommandLoginRoute)
+    login(@Payload() payload: LoginUserRequest) {
+        return this.loginUserAction.execute(payload);
+    }
 }

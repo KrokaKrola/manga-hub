@@ -4,7 +4,12 @@
   "license": "MIT",
   "scripts": {
     "api-gateway:serve:docker": "nx serve api-gateway",
-    "api-main:serve:docker": "nx serve api-main"
+    "api-main:serve:docker": "nx serve api-main",
+    "typeorm": "ts-node ./node_modules/typeorm/cli",
+    "migration:run": "npm run typeorm migration:run -- -d ./apps/api-main/src/infrastructure/database/config.ts",
+    "migration:generate": "npm run typeorm migration:generate -- -d ./apps/api-main/src/infrastructure/database/config.ts ./apps/api-main/src/infrastructure/database/migrations/$npm_config_name",
+    "migration:create": "npm run typeorm -- migration:create ./apps/api-main/src/infrastructure/database/migrations/$npm_config_name",
+    "migration:revert": "npm run typeorm -- -d ./apps/api-main/src/infrastructure/database/config.ts migration:revert"
   },
   "private": true,
   "dependencies": {

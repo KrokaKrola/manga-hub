@@ -3,15 +3,24 @@ import { AppModule } from './app.module';
 import { NestFactory } from '@nestjs/core';
 import { MainServiceClientOptions } from './microservice';
 import { MicroserviceOptions } from '@nestjs/microservices';
+import { HttpExceptionFilter } from './infrastructure/rest/filters/http-exception.filter';
+import { RpcExceptionFilter } from './infrastructure/rest/filters/rpc-exception.filter';
+import { ValidationPipe } from '@manga-hub/common';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+    const app = await NestFactory.create(AppModule);
 
-  app.connectMicroservice<MicroserviceOptions>(MainServiceClientOptions);
+    app.useGlobalFilters(new HttpExceptionFilter());
+    app.useGlobalFilters(new RpcExceptionFilter());
+    app.useGlobalPipes(new ValidationPipe());
 
-  await app.startAllMicroservices();
+    app.connectMicroservice<MicroserviceOptions>(MainServiceClientOptions, {
+        inheritAppConfig: true,
+    });
 
-  Logger.log(`🚀 Main api microservice`);
+    await app.startAllMicroservices();
+
+    Logger.log(`🚀 Main api microservice`);
 }
 
 bootstrap();
