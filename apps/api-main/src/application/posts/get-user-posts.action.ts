@@ -10,8 +10,11 @@ export class GetUserPostsAction {
     ) {}
 
     async execute() {
-        return {
-            ok: true,
-        };
+        return this.userRepository.find({
+            where: {
+                id: 1,
+            },
+            relations: ['posts'],
+        });
     }
 }

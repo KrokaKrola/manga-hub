@@ -7,7 +7,7 @@ import {
 } from '@manga-hub/message-routes';
 import { GetUserPostsAction } from '../../application/posts/get-user-posts.action';
 
-@Controller('posts')
+@Controller()
 export class PostController {
     constructor(
         private readonly createPostAction: CreatePostAction,

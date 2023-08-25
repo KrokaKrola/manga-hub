@@ -36,6 +36,7 @@ export const PostMapper = new BaseSchema<PostEntity>({
             joinColumn: {
                 name: 'user_id',
             },
+            inverseSide: 'posts',
         },
     },
 });

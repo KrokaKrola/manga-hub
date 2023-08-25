@@ -22,6 +22,7 @@ export class BaseSchema<T> extends EntitySchema<T> {
                 name: 'created_at',
                 type: 'timestamp with time zone',
                 createDate: true,
+                default: 'now()',
             };
         }
 

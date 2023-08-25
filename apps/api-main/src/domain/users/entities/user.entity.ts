@@ -1,4 +1,6 @@
 import { BaseEntity } from '../../../infrastructure/database/utils/base.entity';
+import { UserContactsEntity } from './user-contacts.entity';
+import { PostEntity } from '../../posts/entities/post.entity';
 
 export class UserEntity extends BaseEntity {
     name: string;
@@ -11,7 +13,9 @@ export class UserEntity extends BaseEntity {
 
     deletedAt?: Date;
 
-    socialsId?: number;
+    contacts?: UserContactsEntity;
+
+    posts?: PostEntity[];
 
     constructor(
         name: string,

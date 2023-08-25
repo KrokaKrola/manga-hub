@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { MainService } from '../../../infrastructure/external/main/main.service';
-import { LoginUserRequest } from '../requests/login-user.request';
+import { MainService } from '../../infrastructure/external/main/main.service';
+import { LoginUserRequest } from './requests/login-user.request';
 
 @Controller('auth')
 export class AuthController {

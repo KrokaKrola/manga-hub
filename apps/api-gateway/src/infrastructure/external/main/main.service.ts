@@ -7,6 +7,7 @@ import {
     CommandCreatePost,
     CommandGetUserPosts,
     CommandLoginRoute,
+    CommandUpdateAccount,
 } from '@manga-hub/message-routes';
 
 @Injectable()
@@ -25,5 +26,11 @@ export class MainService {
 
     async getUserPosts() {
         return await lastValueFrom(this.client.send(CommandGetUserPosts, {}));
+    }
+
+    async updateAccount(body: any) {
+        return await lastValueFrom(
+            this.client.send(CommandUpdateAccount, body)
+        );
     }
 }
