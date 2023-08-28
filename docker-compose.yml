@@ -1,0 +1,77 @@
+services:
+  api-gateway:
+    build: 
+      context: .
+      dockerfile: ./apps/api-gateway/Dockerfile
+      target: development
+    container_name: api-gateway
+    command: npm run start:debug api-gateway
+    env_file:
+      - ./apps/api-gateway/.env
+    depends_on:
+      - rabbitmq
+      - postgres
+    ports:
+      - '3000:3000'
+    networks:
+      - backend
+    volumes:
+      - .:/usr/src/app:delegated
+      - mono-node-modules:/usr/src/app/node_modules
+
+  api-main:
+    build: 
+      context: .
+      dockerfile: ./apps/api-main/Dockerfile
+      target: development
+    container_name: api-main
+    command: npm run start:debug api-main
+    ports:
+      - '3001:3001'
+    env_file:
+      - ./apps/api-main/.env
+    depends_on:
+      - rabbitmq
+      - postgres
+    networks:
+      - backend
+    volumes:
+      - .:/usr/src/app:delegated
+      - mono-node-modules:/usr/src/app/node_modules
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - '15672:15672'
+      - '5672:5672'
+    networks:
+      - backend
+    volumes:
+      - rabbitmq:/var/lib/rabbitmq
+      - ./docker/rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+
+  postgres:
+    image: postgres
+    container_name: database
+    networks:
+      - backend
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres:/data:delegated
+    environment:
+      POSTGRES_PASSWORD: mangahub_password
+      POSTGRES_USER: mangahub_user
+      POSTGRES_DB: mangahub_db
+    restart: on-failure
+
+networks:
+  backend:
+
+volumes:
+  rabbitmq:
+    driver: local
+  postgres:
+    driver: local
+  mono-node-modules: null
