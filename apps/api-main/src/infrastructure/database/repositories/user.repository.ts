@@ -6,14 +6,14 @@ import { UserMapper } from '../mappers/user.mapper';
 
 @Injectable()
 export class UserRepository extends Repository<UserEntity> {
-    constructor(
-        @InjectRepository(UserMapper)
-        private readonly repository: Repository<UserEntity>
-    ) {
-        super(repository.target, repository.manager, repository.queryRunner);
-    }
+  constructor(
+    @InjectRepository(UserMapper)
+    private readonly repository: Repository<UserEntity>,
+  ) {
+    super(repository.target, repository.manager, repository.queryRunner);
+  }
 
-    public async findByEmail(email: string): Promise<UserEntity> {
-        return this.findOneBy({ email });
-    }
+  public async findByEmail(email: string): Promise<UserEntity> {
+    return this.findOneBy({ email });
+  }
 }

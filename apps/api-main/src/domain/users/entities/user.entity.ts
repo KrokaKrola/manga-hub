@@ -1,34 +1,25 @@
-import { BaseEntity } from '../../../infrastructure/database/utils/base.entity';
-import { UserContactsEntity } from './user-contacts.entity';
-import { PostEntity } from '../../posts/entities/post.entity';
+import { ProfileEntity } from './profile.entity';
 
-export class UserEntity extends BaseEntity {
-    name: string;
+export class UserEntity {
+  id: number;
 
-    email: string;
+  nickname: string;
 
-    passwordHash: string;
+  email: string;
 
-    updatedAt?: Date;
+  passwordHash: string;
 
-    deletedAt?: Date;
+  createdAt: Date;
 
-    contacts?: UserContactsEntity;
+  updatedAt: Date;
 
-    posts?: PostEntity[];
+  deletedAt: Date;
 
-    constructor(
-        name: string,
-        email: string,
-        passwordHash: string,
-        updatedAt?: Date,
-        deletedAt?: Date
-    ) {
-        super();
-        this.name = name;
-        this.email = email;
-        this.passwordHash = passwordHash;
-        this.deletedAt = deletedAt;
-        this.updatedAt = updatedAt;
-    }
+  profile: ProfileEntity;
+
+  constructor(nickname: string, email: string, passwordHash: string) {
+    this.nickname = nickname;
+    this.email = email;
+    this.passwordHash = passwordHash;
+  }
 }

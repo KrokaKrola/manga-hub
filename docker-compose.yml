@@ -1,6 +1,6 @@
 services:
   api-gateway:
-    build: 
+    build:
       context: .
       dockerfile: ./apps/api-gateway/Dockerfile
       target: development
@@ -20,7 +20,7 @@ services:
       - mono-node-modules:/usr/src/app/node_modules
 
   api-main:
-    build: 
+    build:
       context: .
       dockerfile: ./apps/api-main/Dockerfile
       target: development
